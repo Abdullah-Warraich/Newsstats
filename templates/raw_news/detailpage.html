@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Update News</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+    <h1 class="text-center my-3 fw-bold" style="font-family:'Times New Roman', Times, serif;">Update News</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="card">
+            <div class="card-body">
+              <form action="/news/update/{{news.id}}/" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="url">URL:</label>
+                  <input
+                    name="url"
+                    type="text"
+                    id="url"
+                    class="form-control"
+                    value="{{ news.url }}"
+                    readonly
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="title">Title:</label>
+                  <input
+                    name="title"
+                    type="text"
+                    id="title"
+                    class="form-control"
+                    value="{{ news.title }}"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="news_body">News Body:</label>
+                  <textarea
+                    name="news_body"
+                    id="news_body"
+                    rows="5"
+                    class="form-control"
+                  >{{ news.news_body }}</textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="source">Source:</label>
+                  <input
+                    name="source"
+                    type="text"
+                    id="source"
+                    class="form-control"
+                    value="{{ news.source }}"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="published_at">Published At:</label>
+                  <input
+                    name="published_at"
+                    type="datetime-local"
+                    id="published_at"
+                    class="form-control"
+                    value="{{ news.published_at|date:'Y-m-d\\TH:i:s' }}"
+                    readonly
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="video_urls">Video URLs:</label>
+                  <textarea
+                    name="video_urls"
+                    id="video_urls"
+                    rows="2"
+                    class="form-control"
+                  >{{ news.video_urls }}</textarea>
+                </div>
+                <div class="mb-3 form-check">
+                  <label for="is_advertisement">Is Advertisement:</label>
+                  <input
+                    name="is_advertisement"
+                    type="checkbox"
+                    id="is_advertisement"
+                    class="form-check-input"
+                    {% if news.is_advertisement %} checked {% endif %}
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="target_area">Target Area:</label>
+                  <input
+                    name="target_area"
+                    type="text"
+                    id="target_area"
+                    class="form-control"
+                    value="{{ news.target_area }}"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="target_gender">Target Gender:</label>
+                  <input
+                    name="target_gender"
+                    type="text"
+                    id="target_gender"
+                    class="form-control"
+                    value="{{ news.target_gender }}"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="target_age_range">Target Age Range:</label>
+                  <input
+                    name="target_age_range"
+                    type="text"
+                    id="target_age_range"
+                    class="form-control"
+                    value="{{ news.target_age_range }}"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="target_interests">Target Interests:</label>
+                  <textarea
+                    name="target_interests"
+                    id="target_interests"
+                    rows="2"
+                    class="form-control"
+                  >{{ news.target_interests }}</textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="images">Upload Images:</label>
+                  <input
+                      type="file"
+                      name="images"
+                      id="images"
+                      class="form-control"
+                      multiple
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="image_urls">Image URLs (Seperated by comma ,) (Optional):</label>
+                  <textarea
+                      name="image_urls"
+                      id="image_urls"
+                      class="form-control"
+                      placeholder="Enter image URLs separated by commas"
+                  ></textarea>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn text-white text-decoration-none" style="background-color:#806D9C">Update News</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

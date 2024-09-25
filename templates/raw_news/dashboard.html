@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=YourCustomFont:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <h1 class="text-center my-3 fw-bold" style="font-family:'Times New Roman', Times, serif;">News Statistics</h1>
+    <div class="container" >
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Total News</th>
+                    <th>Total Processed News</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{total_news}}</td>
+                    <td>{{total_p_news}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Domain</th>
+                    <th>News Added Today</th>
+                    <th>News Processed Today</th>
+                    <th>Total News Available</th>
+                    <th>Total Processed News Available</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  </tr>
+                  {% for domain in domain_data %}
+                  <tr>
+                    <td>
+                      {{ domain.domain_name }}
+                    </td>
+                    <td>{{ domain.todays_raw_news }}</td>
+                    <td>{{ domain.todays_processed_news}}</td>
+                    <td>{{ domain.total_raw_news }}</td>
+                    <td>{{ domain.total_processed_news }}</td>
+                    <td>
+                      <a href="/news/{{domain.domain_id}}/" class="btn text-white text-decoration-none" style="background-color:#806D9C">
+                        View Records
+                      </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+                <div class="d-flex justify-content-center mt-4">
+                  <!-- Show "First" and "Previous" buttons if not on the first page -->
+                  {% if domain_data.has_previous %}
+                      <a class="btn mx-1 mb-3 text-white" href="?page=1" style="background-color:#AA9DBD">&laquo;</a>
+                      <a class="btn mx-1 mb-3 text-white" href="?page={{ domain_data.previous_page_number }}" style="background-color:#AA9DBD">&lsaquo;</a>
+                  {% endif %}
+                  <!-- Display a range of pages around the current page -->
+                  {% for num in domain_data.paginator.page_range %}
+                      {% if domain_data.number == num %}
+                          <span class="btn mx-1 mb-3 text-white" style="background-color:#563D7C">{{ num }}</span>
+                      {% elif num > domain_data.number|add:'-3' and num < domain_data.number|add:'3' %}
+                          <a class="btn mx-1 mb-3 text-white" style="background-color:#AA9DBD" href="?page={{ num }}">{{ num }}</a>
+                      {% endif %}
+                  {% endfor %}
+                  <!-- Show "Next" and "Last" buttons if not on the last page -->
+                  {% if domain_data.has_next %}
+                      <a class="btn mx-1 mb-3 text-white" style="background-color:#AA9DBD" href="?page={{ domain_data.next_page_number }}">&rsaquo;</a>
+                      <a class="btn mx-1 mb-3 text-white" style="background-color:#AA9DBD" href="?page={{ domain_data.paginator.num_pages }}">&raquo;</a>
+                  {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
